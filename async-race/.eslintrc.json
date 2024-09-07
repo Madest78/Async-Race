@@ -1,18 +1,13 @@
 {
     "extends": [
       "airbnb",
-      "airbnb/hooks",
       "plugin:@typescript-eslint/recommended",
       "plugin:@angular-eslint/recommended"
     ],
     "parser": "@typescript-eslint/parser",
     "plugins": [
       "@typescript-eslint",
-      "@angular-eslint",
-      "import",
-      "jsx-a11y",
-      "react",
-      "react-hooks"
+      "@angular-eslint"
     ],
     "env": {
       "browser": true,
@@ -23,6 +18,9 @@
       "ecmaVersion": 12,
       "sourceType": "module"
     },
-    "rules": {}
+    "rules": {
+      "import/prefer-default-export": "off",
+      "import/no-unresolved": "off"
+    }
   }
   
