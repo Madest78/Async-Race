@@ -2,12 +2,13 @@ mat-toolbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 250px;
+  height: 200px;
   background-color: #000;
 
   .logo {
-    font-size: 24px;
+    font-size: 15px;
     font-weight: bold;
+    line-height: 1.2;
     color: #6c0;
     margin-top: 1rem;
   }

@@ -4,8 +4,31 @@ html,
 body {
   height: 100%;
 }
+
 body {
   margin: 0;
   font-family: Roboto, 'Helvetica Neue', sans-serif;
+  color: #6c0;
   background-color: #333;
+}
+
+.neon-btn {
+  position: relative;
+  display: inline-block;
+  border-radius: 12px;
+  margin: 20px 10px 10px 20px ;
+  padding: 5px 10px;
+  color: #6c0;
+  letter-spacing: 3px;
+  text-decoration: none;
+  font-size: 16px;
+  overflow: hidden;
+  transform: 0.2s;
+}
+
+.neon-btn:hover {
+  color: #333;
+  background: #6c0;
+  box-shadow: 0 0 10px #6c0, 0 0 15px #6c0, 0 0 20px #6c0;
+  transition-delay: 0.3s;
 }
