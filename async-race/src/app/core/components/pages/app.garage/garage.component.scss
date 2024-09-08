@@ -1,8 +1,19 @@
 .container {
-flex-direction: column;
-gap: 0;
+  flex-direction: column;
+  gap: 0;
 }
 
 .page-title {
-margin-left: 3%;
+  margin-left: 3%;
+}
+
+.car-list {
+  margin-top: 20px;
+}
+
+.car-item {
+  border: 1px solid #ddd;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
 }

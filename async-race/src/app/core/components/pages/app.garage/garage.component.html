@@ -1,4 +1,14 @@
 <div class="container">
   <a class="neon-btn" routerLink="/app-winners"> winners &gt;&gt;</a>
   <h6 class="page-title">Garage</h6>
+  
+  <div *ngIf="cars.length > 0" class="car-list">
+    <div *ngFor="let car of cars" class="car-item">
+      <p><strong>Name:</strong> {{ car.name }}</p>
+      <p><strong>Color:</strong> {{ car.color }}</p>
+    </div>
+  </div>
+  <div *ngIf="cars.length === 0">
+    <p>No cars available.</p>
+  </div>
 </div>
