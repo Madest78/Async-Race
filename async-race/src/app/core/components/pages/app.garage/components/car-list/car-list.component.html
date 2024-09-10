@@ -1,9 +1,22 @@
-<div>
-  <h2>Garage</h2>
-  <ul>
-    <li *ngFor="let car of cars">
-      {{ car.name }} - {{ car.color }}
-    </li>
-  </ul>
-  <p>Total Count: {{ totalCount }}</p>
+<div class="car-list" *ngIf="cars.length > 0">
+  <div class="car-item" *ngFor="let car of cars">
+    <div class="car-option">
+      <button href="#" class="neon-btn">Start</button>
+      <button href="#" class="neon-btn stop">Stop</button>
+      <div class="car-dell-edit">
+        <a href="#" class="neon-btn stop"><i class="material-icons">delete</i></a>
+        <a href="#" class="neon-btn"><i class="material-icons">edit</i></a>
+      </div>
+    </div>
+
+    <div class="wrapper">
+      <span class="car-name-ascii" [ngStyle]="{ color: car.color}">{{ car.name }}</span>
+      <span class="car-name-ascii" [ngStyle]="{ color: car.color}"><pre>_/_|_\,__
+=(&#64;)=(&#64;)=</pre></span>
+    </div>
+  </div>
 </div>
+
+<div *ngIf="cars.length === 0">
+  <p>Garage is empty</p>
+</div> 

@@ -4,16 +4,13 @@
 }
 
 .page-title {
-  margin-left: 3%;
+  margin: 10px 10% 0 30%;
 }
 
-.car-list {
-  margin-top: 20px;
+.wrapper {
+  display: flex;
 }
 
-.car-item {
-  border: 1px solid #ddd;
-  padding: 10px;
-  margin-bottom: 10px;
-  border-radius: 5px;
+.spacer{
+  width: 15%;
 }

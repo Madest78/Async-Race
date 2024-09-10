@@ -1,10 +1,15 @@
 import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+
 import { CarService } from '../../services/car.service';
 import { Car } from '../../models/car.models';
 
 @Component({
   selector: 'app-car-list',
+  standalone: true,
+  imports: [CommonModule],
   templateUrl: './car-list.component.html',
+  styleUrl: './car-list.component.scss',
 })
 export class CarListComponent implements OnInit {
   cars: Car[] = [];

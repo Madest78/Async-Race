@@ -1,14 +1,24 @@
 <div class="container">
-  <a class="neon-btn" routerLink="/app-winners"> winners &gt;&gt;</a>
-  <h6 class="page-title">Garage</h6>
-  
-  <div *ngIf="cars.length > 0" class="car-list">
-    <div *ngFor="let car of cars" class="car-item">
-      <p><strong>Name:</strong> {{ car.name }}</p>
-      <p><strong>Color:</strong> {{ car.color }}</p>
+  <div class="wrapper">
+    <a class="neon-btn" routerLink="/app-winners"> Winners &gt;&gt;</a>
+    <h6 class="page-title">Garage</h6>
+  </div>
+
+  <div class="wrapper">
+    <div class="race-options">
+      <a href="#" class="neon-btn">Race</a>
+      <a href="#" class="neon-btn">Reset</a>
+    </div>
+    <span class="spacer"></span>
+    <div class="create-options">
+      <a href="#" class="neon-btn">Create</a>
+      <a href="#" class="neon-btn">Update</a>
+    </div>
+    <span class="spacer"></span>
+    <div class="mass-create-options">
+      <a href="#" class="neon-btn">Generate cars</a>
     </div>
   </div>
-  <div *ngIf="cars.length === 0">
-    <p>No cars available.</p>
-  </div>
+  
+  <app-car-list></app-car-list>
 </div>

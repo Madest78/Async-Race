@@ -4,11 +4,12 @@ import { CommonModule } from '@angular/common';
 
 import { Car } from './models/car.models';
 import { CarService } from './services/car.service';
+import { CarListComponent } from './components/car-list/car-list.component';
 
 @Component({
   selector: 'app-garage',
   standalone: true,
-  imports: [RouterModule, CommonModule],
+  imports: [RouterModule, CommonModule, CarListComponent],
   templateUrl: './garage.component.html',
   styleUrl: './garage.component.scss',
 })
