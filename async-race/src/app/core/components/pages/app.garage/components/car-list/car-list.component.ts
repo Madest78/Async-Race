@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
-import { CarService } from '../../services/car.service';
+import { CarService } from 'src/app/core/share/services/car-service';
 import { Car } from '../../models/car.models';
 
 @Component({
@@ -9,7 +8,7 @@ import { Car } from '../../models/car.models';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './car-list.component.html',
-  styleUrl: './car-list.component.scss',
+  styleUrls: ['./car-list.component.scss'],
 })
 export class CarListComponent implements OnInit {
   cars: Car[] = [];
@@ -20,21 +19,19 @@ export class CarListComponent implements OnInit {
   constructor(private carService: CarService) {}
 
   ngOnInit(): void {
-    this.loadCars();
-    this.loadTotalCount();
+    this.carService.cars$.subscribe((cars) => {
+      this.cars = cars;
+      this.loadTotalCount();
+    });
   }
 
-  loadCars(page: number = 1, limit: number = 10): void {
-    this.carService.getCars(page, limit)
-      .subscribe((cars) => {
-        this.cars = cars;
-      });
+  deleteCar(id: number): void {
+    this.carService.deleteCar(id).subscribe(() => {
+      this.carService.loadCars();
+    });
   }
 
   loadTotalCount(): void {
-    this.carService.getTotalCount()
-      .subscribe((count) => {
-        this.totalCount = count;
-      });
+    this.totalCount = this.cars.length;
   }
 }

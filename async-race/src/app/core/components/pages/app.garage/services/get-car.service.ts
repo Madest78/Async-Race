@@ -1,18 +1,16 @@
 import { Injectable } from '@angular/core';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { map, Observable } from 'rxjs';
-import { HttpParams } from '@angular/common/http';
-
-import { AbstractRequestService } from 'src/app/share/services/abstract-request.service';
 import { Car } from '../models/car.models';
 
 @Injectable({
   providedIn: 'root',
 })
-export class CarService extends AbstractRequestService {
-  /* eslint-disable-next-line class-methods-use-this */
-  getEndpoint(): string {
-    return 'http://localhost:3000/garage';
-  }
+export class GetCarService {
+  private readonly endpoint = 'http://localhost:3000/garage';
+
+  /* eslint-disable-next-line no-useless-constructor, no-empty-function */
+  constructor(private http: HttpClient) {}
 
   getCars(page?: number, limit?: number): Observable<Car[]> {
     let params = new HttpParams();
@@ -22,12 +20,12 @@ export class CarService extends AbstractRequestService {
     if (limit !== undefined) {
       params = params.set('_limit', limit.toString());
     }
-    return this.get<Car[]>(params);
+    return this.http.get<Car[]>(this.endpoint, { params });
   }
 
   getTotalCount(): Observable<number> {
     return this.http
-      .get<number>(this.getEndpoint(), { observe: 'response' })
+      .get(this.endpoint, { observe: 'response' })
       .pipe(
         map((response) => {
           const totalCount = response.headers.get('x-Total-Count');

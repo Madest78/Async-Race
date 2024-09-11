@@ -4,8 +4,12 @@
       <button href="#" class="neon-btn">Start</button>
       <button href="#" class="neon-btn stop">Stop</button>
       <div class="car-dell-edit">
-        <a href="#" class="neon-btn stop"><i class="material-icons">delete</i></a>
-        <a href="#" class="neon-btn"><i class="material-icons">edit</i></a>
+        <a href="#" class="neon-btn stop" (click)="deleteCar(car.id)">
+          <i class="material-icons">delete</i>
+        </a>
+        <a href="#" class="neon-btn">
+          <i class="material-icons">edit</i>
+        </a>
       </div>
     </div>
 
@@ -15,6 +19,7 @@
 =(&#64;)=(&#64;)=</pre></span>
     </div>
   </div>
+  <div class="totalCount">{{totalCount}}</div>
 </div>
 
 <div *ngIf="cars.length === 0">

@@ -11,7 +11,14 @@
     </div>
     <span class="spacer"></span>
     <div class="create-options">
-      <a href="#" class="neon-btn">Create</a>
+      <a href="#" class="neon-btn" (click)="showCreateForm = !showCreateForm">Create</a>
+      <div *ngIf="showCreateForm">
+        <form (ngSubmit)="onSubmit()" #carForm="ngForm">
+          <input name="name" [(ngModel)]="newCar.name" placeholder="Car name" required />
+          <input name="color" [(ngModel)]="newCar.color" type="color" required />
+          <button type="submit" class="neon-btn">Create Car</button>
+        </form>
+      </div>
       <a href="#" class="neon-btn">Update</a>
     </div>
     <span class="spacer"></span>
