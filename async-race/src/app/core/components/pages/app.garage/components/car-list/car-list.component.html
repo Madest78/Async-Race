@@ -1,4 +1,5 @@
 <div class="car-list" *ngIf="cars.length > 0">
+  <div class="totalCount">{{totalCount}}</div>
   <div class="car-item" *ngFor="let car of cars">
     <div class="car-option">
       <button href="#" class="neon-btn">Start</button>
@@ -8,20 +9,28 @@
           <i class="material-icons">delete</i>
         </a>
         <a href="#" class="neon-btn">
-          <i class="material-icons">edit</i>
+          <i class="material-icons" (click)="showUpdateFormForCar(car)">edit</i>
         </a>
       </div>
     </div>
 
     <div class="wrapper">
-      <span class="car-name-ascii" [ngStyle]="{ color: car.color}">{{ car.name }}</span>
+      <span class="car-name-ascii" [ngStyle]="{ color: car.color}">{{ car.name.length > 10 ? car.name.substring(0, 10) + '...' : car.name }}</span>
       <span class="car-name-ascii" [ngStyle]="{ color: car.color}"><pre>_/_|_\,__
 =(&#64;)=(&#64;)=</pre></span>
     </div>
   </div>
-  <div class="totalCount">{{totalCount}}</div>
 </div>
 
 <div *ngIf="cars.length === 0">
   <p>Garage is empty</p>
 </div> 
+
+<div *ngIf="showUpdateForm">
+  <h3>Update Car</h3>
+  <form (ngSubmit)="onUpdate()" #updateCarForm="ngForm">
+    <input name="name" [(ngModel)]="updatedCar.name" placeholder="Car name" required />
+    <input name="color" [(ngModel)]="updatedCar.color" type="color" required />
+    <button type="submit" class="neon-btn">Update Car</button>
+  </form>
+</div>

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { Car, NewCar } from '../../components/pages/app.garage/models/car.models';
+import { Car, NewCar } from '../../core/components/pages/app.garage/models/car.models';
 
 @Injectable({
   providedIn: 'root',
@@ -37,6 +37,20 @@ export class CarService {
       tap(() => {
         const currentCars = this.carsSubject.value.filter((car) => car.id !== id);
         this.carsSubject.next(currentCars);
+      }),
+    );
+  }
+
+  updateCar(updatedCar: Car): Observable<Car> {
+    return this.http.put<Car>(`${this.endpoint}/${updatedCar.id}`, updatedCar).pipe(
+      tap((updated: Car) => {
+        const updatedCars = this.carsSubject.value.map((car) => {
+          if (car.id === updated.id) {
+            return updated;
+          }
+          return car;
+        });
+        this.carsSubject.next(updatedCars);
       }),
     );
   }
