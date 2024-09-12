@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 })
 export class RandomCarService {
   static generateRandomCarName(): string {
-    const carNames = ['Lamborgini', 'Pagani', 'Bugatti', 'Ferraei', 'Maserati', 'AlfaRomeo', 'ЗАЗ', 'Audi', 'Mazda', 'Opel', 'Ford'];
+    const carNames = ['Lamborgini', 'Pagani', 'Bugatti', 'Ferraei', 'Maserati', 'AlfaRomeo', 'ZAZ', 'Audi', 'Mazda', 'Opel', 'Ford'];
     const randomIndex = Math.floor(Math.random() * carNames.length);
     return carNames[randomIndex];
   }
