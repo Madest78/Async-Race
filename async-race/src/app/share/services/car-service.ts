@@ -32,6 +32,15 @@ export class CarService {
     );
   }
 
+  createMultipleCars(cars: NewCar[]): Observable<Car[]> {
+    return this.http.post<Car[]>(`${this.endpoint}`, cars).pipe(
+      tap((newCars: Car[]) => {
+        const currentCars = this.carsSubject.value;
+        this.carsSubject.next([...currentCars, ...newCars]);
+      }),
+    );
+  }
+
   deleteCar(id: number): Observable<void> {
     return this.http.delete<void>(`${this.endpoint}/${id}`).pipe(
       tap(() => {

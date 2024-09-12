@@ -40,6 +40,22 @@ export class GarageComponent {
     });
   }
 
+  generateCars(): void {
+    const cars: NewCar[] = [];
+    for (let i = 0; i < 100; i += 1) {
+      const newCar: NewCar = {
+        name: RandomCarService.generateRandomCarName(),
+        color: RandomCarService.generateRandomColor(),
+      };
+      cars.push(newCar);
+    }
+    cars.forEach((car) => {
+      this.carService.createCar(car).subscribe(() => {
+        console.log('Car created successfully');
+      });
+    });
+  }
+
   onUpdate(): void {
     if (!this.updatedCar.name) {
       this.updatedCar.name = RandomCarService.generateRandomCarName();
