@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
-import { Car } from '../models/car.models';
+import { Car } from '../models/car.model';
 import { CarApiService } from './car-api.service';
 
 @Injectable({

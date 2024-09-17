@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
-import { Car } from '../models/car.models';
+import { Car } from '../models/car.model';
 import { CarApiService } from './car-api.service';
 import { CarLoadService } from './car-load.service';
 

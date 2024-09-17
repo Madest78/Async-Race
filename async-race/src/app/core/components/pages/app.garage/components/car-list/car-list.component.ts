@@ -2,7 +2,7 @@ import { Component, OnInit, Renderer2 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
-import { Car, StartedCar } from '../../models/car.models';
+import { Car, StartedCar } from '../../models/car.model';
 // import { CarService } from '../../services/car.service';
 import { RandomCarService } from '../../services/random-car.service';
 import { StartStopCarService } from '../../services/start-stop-car.service';

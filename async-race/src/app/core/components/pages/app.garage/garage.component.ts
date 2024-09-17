@@ -4,7 +4,7 @@ import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
-import { Car, NewCar } from './models/car.models';
+import { Car, NewCar } from './models/car.model';
 import { CarListComponent } from './components/car-list/car-list.component';
 import { RandomCarService } from './services/random-car.service';
 import { CarCreateService } from './services/car-create.service';
