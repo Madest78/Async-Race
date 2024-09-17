@@ -1,0 +1,22 @@
+<div class="winner-container">
+  <table>
+    <thead>
+      <tr>
+        <th>№</th>
+        <th>Car</th>
+        <th>Name</th>
+        <th>Wins</th>
+        <th>Best time</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let winner of winners">
+        <td>{{ winner.id }}</td>
+        <td></td>
+        <td></td>
+        <td>{{ winner.wins }}</td>
+        <td>{{ winner.time | number:'1.2' }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

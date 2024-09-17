@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { HeaderComponent } from './core/components/header/header.component';
-import { GarageComponent } from './core/components/pages/app.garage/garage.component';
-import { WinnersComponent } from './core/components/pages/app.winners/components/winners.component';
+import { HeaderComponent } from './core/header/header.component';
+import { GarageComponent } from './core/pages/app.garage/garage.component';
+import { WinnersComponent } from './core/pages/app.winners/winners.component';
 
 @Component({
   selector: 'app-root',

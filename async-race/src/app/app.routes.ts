@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
-import { GarageComponent } from './core/components/pages/app.garage/garage.component';
-import { WinnersComponent } from './core/components/pages/app.winners/components/winners.component';
+import { GarageComponent } from './core/pages/app.garage/garage.component';
+import { WinnersComponent } from './core/pages/app.winners/winners.component';
 
 export const routes: Routes = [
   { path: 'app-garage', component: GarageComponent },
