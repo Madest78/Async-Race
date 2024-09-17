@@ -1,12 +1,14 @@
+/* eslint-disable import/extensions */
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
-import { CarService } from 'src/app/share/services/car-service';
 import { Car, NewCar } from './models/car.models';
 import { CarListComponent } from './components/car-list/car-list.component';
 import { RandomCarService } from './services/random-car.service';
+import { CarCreateService } from './services/car-create.service';
+import { CarUpdateDeleteService } from './services/car-update-delete.service';
 
 @Component({
   selector: 'app-garage',
@@ -24,8 +26,12 @@ export class GarageComponent {
 
   updatedCar: Car = { id: 0, name: '', color: '' };
 
-  /* eslint-disable-next-line no-useless-constructor, no-empty-function */
-  constructor(private carService: CarService, private randomCarService: RandomCarService) {}
+  /* eslint-disable-next-line no-useless-constructor */
+  constructor(
+    private carCreateService: CarCreateService,
+    private carUpdateDeleteService: CarUpdateDeleteService,
+  // eslint-disable-next-line no-empty-function
+  ) {}
 
   onSubmit(): void {
     if (!this.newCar.name) {
@@ -34,7 +40,7 @@ export class GarageComponent {
     if (!this.newCar.color) {
       this.newCar.color = RandomCarService.generateRandomColor();
     }
-    this.carService.createCar(this.newCar).subscribe(() => {
+    this.carCreateService.createCar(this.newCar).subscribe(() => {
       this.showCreateForm = false;
       this.newCar = { name: '', color: '' };
     });
@@ -50,27 +56,9 @@ export class GarageComponent {
       cars.push(newCar);
     }
     cars.forEach((car) => {
-      this.carService.createCar(car).subscribe(() => {
+      this.carCreateService.createCar(car).subscribe(() => {
         console.log('Car created successfully');
       });
     });
-  }
-
-  onUpdate(): void {
-    if (!this.updatedCar.name) {
-      this.updatedCar.name = RandomCarService.generateRandomCarName();
-    }
-    if (!this.updatedCar.color) {
-      this.updatedCar.color = RandomCarService.generateRandomColor();
-    }
-    this.carService.updateCar(this.updatedCar).subscribe(() => {
-      this.showUpdateForm = false;
-      this.updatedCar = { id: 0, name: '', color: '' };
-    });
-  }
-
-  showUpdateFormForCar(car: Car): void {
-    this.updatedCar = { ...car };
-    this.showUpdateForm = true;
   }
 }
