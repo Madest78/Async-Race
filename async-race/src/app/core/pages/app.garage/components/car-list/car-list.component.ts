@@ -1,9 +1,9 @@
 import { Component, OnInit, Renderer2 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { lastValueFrom } from 'rxjs';
 
 import { Car, StartedCar } from '../../models/car.model';
-// import { CarService } from '../../services/car.service';
 import { RandomCarService } from '../../services/random-car.service';
 import { StartStopCarService } from '../../services/start-stop-car.service';
 import { CarUpdateDeleteService } from '../../services/car-update-delete.service';
@@ -29,7 +29,6 @@ export class CarListComponent implements OnInit {
   constructor(
     private carLoadService: CarLoadService,
     private carUpdateDeleteService: CarUpdateDeleteService,
-    // private carService: CarService,
     private startStopCarService: StartStopCarService,
     private renderer: Renderer2,
   // eslint-disable-next-line no-empty-function
@@ -129,5 +128,19 @@ export class CarListComponent implements OnInit {
     if (carElement) {
       this.renderer.removeClass(carElement, 'car-moving');
     }
+  }
+
+  startAllCars(): void {
+    const carIds = this.cars.map((car) => car.id);
+    const startPromises = carIds.map((id) => lastValueFrom(this.startStopCarService.patchStartStopCar(id, 'started')));
+    Promise.all(startPromises)
+      .then(() => {
+        carIds.forEach((id) => {
+          this.makeDrivingRequest(id);
+        });
+      })
+      .catch((error) => {
+        console.error('Start all cars error', error);
+      });
   }
 }

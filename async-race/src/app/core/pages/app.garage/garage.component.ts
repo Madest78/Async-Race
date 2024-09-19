@@ -1,5 +1,5 @@
 /* eslint-disable import/extensions */
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -60,5 +60,13 @@ export class GarageComponent {
         console.log('Car created successfully');
       });
     });
+  }
+
+  @ViewChild(CarListComponent) carListCimopnent!: CarListComponent;
+
+  startRace(): void {
+    if (this.carListCimopnent) {
+      this.carListCimopnent.startAllCars();
+    }
   }
 }
