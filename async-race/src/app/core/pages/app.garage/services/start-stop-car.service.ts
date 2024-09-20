@@ -25,6 +25,6 @@ export class StartStopCarService {
       .set('id', id.toString())
       .set('status', 'drive');
 
-    return this.http.patch<{ distance: number; velocity: number }>(this.endpoint, null, { params });
+    return this.http.patch<{ success: boolean }>(this.endpoint, null, { params });
   }
 }

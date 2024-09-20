@@ -3,3 +3,8 @@ export interface Winner {
   wins: number;
   time: number;
 }
+
+export interface DriveResoinse {
+  succes: boolean;
+  id?: number;
+}

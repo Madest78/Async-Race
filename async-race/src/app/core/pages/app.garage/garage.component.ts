@@ -57,7 +57,6 @@ export class GarageComponent {
     }
     cars.forEach((car) => {
       this.carCreateService.createCar(car).subscribe(() => {
-        console.log('Car created successfully');
       });
     });
   }

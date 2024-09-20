@@ -16,6 +16,8 @@ export interface StartedCar extends NewCar {
 }
 
 export interface DriveResponse {
-  success: boolean;
+  velocity: number;
+  distance: number;
+  success?: boolean;
   isDriving?: boolean;
 }

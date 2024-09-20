@@ -26,6 +26,10 @@ export class WinnersApiService {
     return this.http.get<Winner[]>(this.endpoint, { params });
   }
 
+  getWinnerById(id: number): Observable<Winner> {
+    return this.http.get<Winner>(`${this.endpoint}/${id}`);
+  }
+
   createWinner(id: number, winner: Partial<Winner>): Observable<Winner> {
     return this.http.post<Winner>(this.endpoint, winner);
   }
