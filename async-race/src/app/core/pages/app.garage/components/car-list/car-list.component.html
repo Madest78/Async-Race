@@ -1,0 +1,38 @@
+<div class="car-list" *ngIf="showUpdateForm">
+  <h3>Update Car</h3>
+  <form (ngSubmit)="onUpdate()" #updateCarForm="ngForm">
+    <input name="name" [(ngModel)]="updatedCar.name" placeholder="Car name" required />
+    <input name="color" [(ngModel)]="updatedCar.color" type="color" required />
+    <button type="submit" class="neon-btn">Update Car</button>
+  </form>
+</div>
+
+<div class="car-list" *ngIf="cars.length > 0">
+  <div class="totalCount">{{totalCount}}</div>
+  <div class="car-item" *ngFor="let car of cars">
+    <div class="car-option">
+      <button href="#" class="neon-btn" (click)="startStopCar(car.id, 'started')">Start</button>
+      <button href="#" class="neon-btn stop" (click)="startStopCar(car.id, 'stopped')">Stop</button>
+      <div class="car-dell-edit">
+        <a href="#" class="neon-btn stop" (click)="deleteCar(car.id)">
+          <i class="material-icons">delete</i>
+        </a>
+        <a href="#" class="neon-btn">
+          <i class="material-icons" (click)="showUpdateFormForCar(car)">edit</i>
+        </a>
+      </div>
+    </div>
+    <div class="wrapp" #wrapp>
+      <span id="car-{{car.id}}"  class="car-name-ascii ascii" [ngStyle]="{ color: car.color}" [ngClass]="{ 'car-moving': car.isStarted && !car.isDriving }">
+        <pre>_/_|_\,__
+=(&#64;)=(&#64;)=</pre>
+      </span>
+      <span class="car-name-ascii" [ngStyle]="{ color: car.color}">{{ car.name.length > 10 ? car.name.substring(0, 10) +
+        '...' : car.name }}</span>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="cars.length === 0">
+  <p>Garage is empty</p>
+</div>

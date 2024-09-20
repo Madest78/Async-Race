@@ -1,0 +1,17 @@
+.container {
+  flex-direction: column;
+  gap: 0;
+}
+
+.page-title {
+  margin: 10px 10% 0 30%;
+}
+
+.wrapper {
+  display: flex;
+  position: relative;
+}
+
+.spacer{
+  width: 15%;
+}

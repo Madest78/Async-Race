@@ -16,7 +16,7 @@ body {
   position: relative;
   display: inline-block;
   border-radius: 12px;
-  margin: 20px 10px 10px 20px ;
+  margin: 10px 10px 5px 10px;
   padding: 5px 10px;
   color: #6c0;
   letter-spacing: 3px;
@@ -29,6 +29,9 @@ body {
 .neon-btn:hover {
   color: #333;
   background: #6c0;
-  box-shadow: 0 0 10px #6c0, 0 0 15px #6c0, 0 0 20px #6c0;
+  box-shadow:
+    0 0 10px #6c0,
+    0 0 15px #6c0,
+    0 0 20px #6c0;
   transition-delay: 0.3s;
 }

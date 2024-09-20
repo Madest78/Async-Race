@@ -1,0 +1,78 @@
+.car-list {
+  margin-inline: 1%;
+}
+
+.car-item {
+  display: flex;
+  position: relative;
+  border: 1px solid #6c0;
+  border-radius: 5px;
+}
+
+.car-option {
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  border: 1px solid #6c0;
+  border-radius: 5px;
+}
+
+.car-name-ascii{
+  margin-top: 1%;
+}
+
+.neon-btn {
+  margin: 0;
+  background: none;
+  border: none;
+  font: inherit;
+}
+
+.neon-btn:hover {
+  color: #333;
+  background: #6c0;
+}
+
+.stop {
+  color: #ac3535;
+}
+
+.stop:hover {
+  color: #333;
+  background: #ac3535;
+  box-shadow:
+    0 0 10px #ac3535,
+    0 0 15px #ac3535,
+    0 0 20px #ac3535;
+}
+.wrapp {
+  display: flex;
+  flex-grow: 1;
+  padding-left: 1%;
+  position: relative;
+  box-sizing: border-box;
+  border: 1px solid #6c0;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+@keyframes moveCar {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(calc(100vw - 220px));
+  }
+}
+
+.car-moving {
+  animation: moveCar 3s linear forwards;
+}
+
+.ascii {
+  position: absolute;
+  top: 20px;
+  transition: transform 0.5s ease-in-out;
+  will-change: transform;
+  white-space: nowrap;
+}
