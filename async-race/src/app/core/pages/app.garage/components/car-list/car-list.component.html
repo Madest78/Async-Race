@@ -33,6 +33,12 @@
   </div>
 </div>
 
+<div class="pagination">
+  <button (click)="previousPage()" [disabled]="currentPage === 1">&lt;&lt;</button>
+  <span>Page {{ currentPage }}</span>
+  <button (click)="nextPage()" [disabled]="currentPage * itemsPerPage >= totalCount">&gt;&gt;</button>
+</div>
+
 <div *ngIf="cars.length === 0">
   <p>Garage is empty</p>
 </div>

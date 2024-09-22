@@ -19,4 +19,9 @@
       </tr>
     </tbody>
   </table>
+
+<div *ngIf="!isLoading && winners.length > 0" class="pagination"></div>
+  <button (click)="onPageChange(currentPage - 1)" [disabled]="currentPage === 1">&lt;&lt;</button>
+  <span>Страница {{ currentPage }}</span>
+  <button (click)="onPageChange(currentPage + 1)">&gt;&gt;</button>
 </div>

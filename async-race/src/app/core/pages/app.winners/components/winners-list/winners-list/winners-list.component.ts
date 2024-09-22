@@ -15,15 +15,21 @@ export class WinnersListComponent implements OnInit {
 
   isLoading = true;
 
+  currentPage = 1;
+
+  itemsPerPage = 10;
+
+  totalItems = 0;
+
   // eslint-disable-next-line no-useless-constructor, no-empty-function
   constructor(private winnersApiService: WinnersApiService) {}
 
   ngOnInit(): void {
-    this.loadWinners();
+    this.loadWinners(this.currentPage);
   }
 
-  loadWinners(): void {
-    this.winnersApiService.getWinners(1, 10, 'wins', 'DESC').subscribe(
+  loadWinners(page: number): void {
+    this.winnersApiService.getWinners(page, this.itemsPerPage, 'wins', 'DESC').subscribe(
       (response) => {
         this.winners = response;
         this.isLoading = false;
@@ -33,5 +39,10 @@ export class WinnersListComponent implements OnInit {
         this.isLoading = false;
       },
     );
+  }
+
+  onPageChange(newPage: number): void {
+    this.currentPage = newPage;
+    this.loadWinners(this.currentPage);
   }
 }

@@ -22,6 +22,10 @@ export class CarListComponent implements OnInit {
 
   totalCount: number = 0;
 
+  currentPage: number = 1;
+
+  itemsPerPage: number = 7;
+
   showUpdateForm = false;
 
   updatedCar: Car = { id: 0, name: '', color: '' };
@@ -45,12 +49,34 @@ export class CarListComponent implements OnInit {
       this.cars = cars.map((car) => ({ ...car, isStarted: false }));
       this.loadTotalCount();
     });
+
+    this.carLoadService.totalCount$.subscribe((total) => {
+      this.totalCount = total;
+    });
   }
 
   deleteCar(id: number): void {
     this.carUpdateDeleteService.deleteCar(id).subscribe(() => {
       this.carLoadService.loadCars();
     });
+  }
+
+  loadCars(): void {
+    this.carLoadService.loadCars(this.currentPage, this.itemsPerPage);
+  }
+
+  nextPage(): void {
+    if (this.currentPage * this.itemsPerPage < this.totalCount) {
+      this.currentPage += 1;
+      this.loadCars();
+    }
+  }
+
+  previousPage(): void {
+    if (this.currentPage > 1) {
+      this.currentPage -= 1;
+      this.loadCars();
+    }
   }
 
   onUpdate(): void {
