@@ -56,8 +56,10 @@ export class CarListComponent implements OnInit {
   }
 
   deleteCar(id: number): void {
-    this.carUpdateDeleteService.deleteCar(id).subscribe(() => {
-      this.carLoadService.loadCars();
+    this.carUpdateDeleteService.deleteCar(id).subscribe({
+      next: () => {
+        this.winnersApiService.deleteWinner(id).subscribe();
+      },
     });
   }
 
@@ -111,7 +113,6 @@ export class CarListComponent implements OnInit {
           if (status === 'started') {
             if (velocity > 0) {
               const timeOfRace = (distance / 1000) / velocity;
-              console.log(response);
               console.log(`Time of race: ${timeOfRace.toFixed(3)} seconds`);
             }
             this.startStopCarService.makeDrivingRequest(id).subscribe(
@@ -181,17 +182,17 @@ export class CarListComponent implements OnInit {
           }
         }
       },
-      (error) => {
-        if (error.status === 500) {
-          console.error(`Ошибка на id ${id}.`);
-          const car = this.cars.find((c) => c.id === id);
-          if (car) {
-            this.stopAnimation(car);
-          }
-        } else {
-          console.error(`Ошибка на id ${id}`, error);
-        }
-      },
+      // (error) => {
+      //   if (error.status === 500) {
+      //     // console.error(`Error id ${id}.`);
+      //     const car = this.cars.find((c) => c.id === id);
+      //     if (car) {
+      //       this.stopAnimation(car);
+      //     }
+      //   } else {
+      //     console.error(`Ошибка на id ${id}`, error);
+      //   }
+      // },
     );
   }
 
@@ -212,7 +213,6 @@ export class CarListComponent implements OnInit {
   startAllCars(): void {
     const carIds = this.cars.map((car) => car.id);
     const results: StartedCar[] = [];
-
     const startPromises = carIds.map((id) => lastValueFrom(this.startStopCarService.patchStartStopCar(id, 'started')));
 
     Promise.all(startPromises)

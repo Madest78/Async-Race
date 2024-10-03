@@ -34,9 +34,9 @@
 </div>
 
 <div class="pagination">
-  <button (click)="previousPage()" [disabled]="currentPage === 1">&lt;&lt;</button>
+  <button class="neon-btn" (click)="previousPage()">&lt;&lt;</button>
   <span>Page {{ currentPage }}</span>
-  <button (click)="nextPage()" [disabled]="currentPage * itemsPerPage >= totalCount">&gt;&gt;</button>
+  <button class="neon-btn" (click)="nextPage()" [disabled]="currentPage * itemsPerPage >= totalCount">&gt;&gt;</button>
 </div>
 
 <div *ngIf="cars.length === 0">

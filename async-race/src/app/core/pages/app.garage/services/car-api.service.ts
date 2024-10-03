@@ -24,6 +24,10 @@ export class CarApiService {
     );
   }
 
+  getCarById(id: number): Observable<Car> {
+    return this.http.get<Car>(`${this.endpoint}/${id}`);
+  }
+
   createCar(car: NewCar): Observable<Car> {
     return this.http.post<Car>(this.endpoint, car);
   }
