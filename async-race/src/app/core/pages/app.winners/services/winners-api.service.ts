@@ -32,7 +32,6 @@ export class WinnersApiService {
 
   createWinner(id: number, winner: Partial<Winner>): Observable<Winner> {
     return this.http.post<Winner>(this.endpoint, winner);
-    console.log(1111);
   }
 
   updateWinner(id: number, winner: Partial<Winner>): Observable<Winner> {
