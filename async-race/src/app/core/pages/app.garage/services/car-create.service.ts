@@ -18,6 +18,7 @@ export class CarCreateService {
       tap((newCar: Car) => {
         const currentCars = this.carLoadService.carsSubject.value;
         this.carLoadService.carsSubject.next([...currentCars, newCar]);
+        this.carLoadService.loadCars();
       }),
     );
   }

@@ -37,4 +37,8 @@ export class WinnersApiService {
   updateWinner(id: number, winner: Partial<Winner>): Observable<Winner> {
     return this.http.put<Winner>(`${this.endpoint}/${id}`, winner);
   }
+
+  deleteWinner(id: number): Observable<Winner> {
+    return this.http.delete<Winner>(`${this.endpoint}/${id}`);
+  }
 }

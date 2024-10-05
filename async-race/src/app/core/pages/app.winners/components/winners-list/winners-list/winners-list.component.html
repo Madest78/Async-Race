@@ -1,5 +1,18 @@
 <div class="winner-container">
-  <table>
+
+  <div class="sorting-buttons">
+    <div class="wins-sort">
+      <button class="neon-btn" (click)="sortWinners('wins', 'ASC')" >Wins <mat-icon>arrow_downward</mat-icon></button>
+      <button class="neon-btn" (click)="sortWinners('wins', 'DESC')">Wins <mat-icon>arrow_upward</mat-icon></button>
+    </div>
+
+    <div class="id-sort">
+      <button class="neon-btn" (click)="sortWinners('id', 'ASC')">ID <mat-icon>arrow_downward</mat-icon></button>
+      <button class="neon-btn" (click)="sortWinners('id', 'DESC')">ID <mat-icon>arrow_upward</mat-icon></button>
+    </div> 
+  </div>
+
+  <table class="table">
     <thead>
       <tr>
         <th>№</th>
@@ -12,11 +25,17 @@
     <tbody>
       <tr *ngFor="let winner of winners">
         <td>{{ winner.id }}</td>
-        <td></td>
-        <td></td>
+        <td [style]="{ 'color': carDetailsMap[winner.id]?.color }"><pre>_/_|_\,__
+=(&#64;)=(&#64;)=</pre></td>
+        <td>{{ carDetailsMap[winner.id]?.name }}</td>
         <td>{{ winner.wins }}</td>
         <td>{{ winner.time | number:'1.2' }}</td>
       </tr>
     </tbody>
   </table>
+
+<div *ngIf="!isLoading && winners.length > 0" class="pagination"></div>
+  <button class="neon-btn" (click)="onPageChange(currentPage - 1)">&lt;&lt;</button>
+  <span>Страница {{ currentPage }}</span>
+  <button class="neon-btn" (click)="onPageChange(currentPage + 1)">&gt;&gt;</button>
 </div>

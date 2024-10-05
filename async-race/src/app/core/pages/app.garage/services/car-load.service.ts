@@ -12,13 +12,18 @@ export class CarLoadService {
 
   cars$ = this.carsSubject.asObservable();
 
+  totalCountSubject = new BehaviorSubject<number>(0);
+
+  totalCount$ = this.totalCountSubject.asObservable();
+
   constructor(private carApiService: CarApiService) {
     this.loadCars();
   }
 
-  loadCars(): void {
-    this.carApiService.getCars().subscribe((cars) => {
-      this.carsSubject.next(cars);
+  loadCars(page: number = 1, limit: number = 7): void {
+    this.carApiService.getCars(page, limit).subscribe((result) => {
+      this.carsSubject.next(result.cars);
+      this.totalCountSubject.next(result.total);
     });
   }
 }
