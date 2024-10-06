@@ -24,4 +24,12 @@ export class CarAnimationService {
       renderer.removeClass(carElement, 'car-moving');
     }
   }
+
+  // eslint-disable-next-line class-methods-use-this
+  pauseAnimation(car: StartedCar, renderer: Renderer2): void {
+    const carElement = document.getElementById(`car-${car.id}`);
+    if (carElement) {
+      renderer.setStyle(carElement, 'animation-play-state', 'paused');
+    }
+  }
 }
