@@ -61,6 +61,11 @@ export class CarListComponent implements OnInit {
     this.carUpdateDeleteService.deleteCar(id).subscribe({
       next: () => {
         this.winnersApiService.deleteWinner(id).subscribe();
+        if (this.cars.length === 0 && this.currentPage > 1) {
+          this.previousPage();
+        } else if (this.currentPage === 1) {
+          this.loadCars();
+        }
       },
     });
   }

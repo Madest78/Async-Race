@@ -7,7 +7,7 @@ Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The appli
 
 ## Deploiment platform: [GitHub Pages](https://madest78.github.io/Async-Race/)
 
-## Checklist 195/400 pts
+## Checklist 260/400 pts
 ## 🚀 UI Deployment
  - [x] (Deployment Platform: Successfully deploy the UI on one of the following platforms: GitHub Pages, Netlify, Vercel, Cloudflare Pages, or a similar service.)
 
@@ -40,7 +40,7 @@ Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The appli
  - [x] (Pagination (10 points): Implement pagination for the "Garage" view, displaying 7 cars per page.)
  - [x] (EXTRA POINTS (20 points):)
   - [x] (Empty Garage Handle empty garage with user friendly message "No Cars" or something like this. Do it at your discretion.)
-  - [ ] (Empty Garage Page If you remove the last one car on the page, you should be moved on the previous page, to hide the empty one.)
+  - [x] (Empty Garage Page If you remove the last one car on the page, you should be moved on the previous page, to hide the empty one.)
 
 ## 🏆 Winners View (50 points)
  - [x] (Display Winners (15 points): After some car wins it should be displayed at the "Winners view" table.)
