@@ -9,11 +9,17 @@ import { CarListComponent } from './components/car-list/car-list.component';
 import { RandomCarService } from './services/random-car.service';
 import { CarCreateService } from './services/car-create.service';
 import { CarUpdateDeleteService } from './services/car-update-delete.service';
+import { CarLoadService } from './services/car-load.service';
 
 @Component({
   selector: 'app-garage',
   standalone: true,
-  imports: [RouterModule, CommonModule, CarListComponent, FormsModule],
+  imports: [
+    RouterModule,
+    CommonModule,
+    CarListComponent,
+    FormsModule,
+  ],
   templateUrl: './garage.component.html',
   styleUrl: './garage.component.scss',
 })
@@ -30,6 +36,7 @@ export class GarageComponent {
   constructor(
     private carCreateService: CarCreateService,
     private carUpdateDeleteService: CarUpdateDeleteService,
+    private carLoadService: CarLoadService,
   // eslint-disable-next-line no-empty-function
   ) {}
 
@@ -61,11 +68,15 @@ export class GarageComponent {
     });
   }
 
-  @ViewChild(CarListComponent) carListCimopnent!: CarListComponent;
+  @ViewChild(CarListComponent) carListComopnent!: CarListComponent;
 
   startRace(): void {
-    if (this.carListCimopnent) {
-      this.carListCimopnent.startAllCars();
+    if (this.carListComopnent) {
+      this.carListComopnent.startAllCars();
     }
+  }
+
+  loadCars(): void {
+    this.carLoadService.loadCars();
   }
 }
