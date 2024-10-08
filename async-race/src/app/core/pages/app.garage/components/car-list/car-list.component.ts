@@ -1,6 +1,7 @@
 import { Component, OnInit, Renderer2 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { lastValueFrom } from 'rxjs';
 
 import { Car, StartedCar } from '../../models/car.model';
 import { RandomCarService } from '../../services/random-car.service';
@@ -188,8 +189,8 @@ export class CarListComponent implements OnInit {
                         console.log('Winner created', newWinner);
                       },
                     );
-                  } else {
-                    console.error(error);
+                  } else if (error.status === 500) {
+                    this.carAnimationService.pauseAnimation(car, this.renderer);
                   }
                 },
               );
@@ -202,9 +203,28 @@ export class CarListComponent implements OnInit {
 
   startAllCars(): void {
     const carIds = this.cars.map((car) => car.id);
+    const results: StartedCar[] = [];
+    const startPromises = carIds.map((id) => lastValueFrom(this.startStopCarService.patchStartStopCar(id, 'started')));
 
-    carIds.forEach((id) => {
-      this.startStopCar(id, 'started');
-    });
+    Promise.all(startPromises)
+      .then((responses) => {
+        responses.forEach((response, index) => {
+          const { velocity, distance } = response;
+          if (velocity > 0) {
+            const timeOfRace = (distance / 1000) / velocity;
+            console.log(`Car ${carIds[index]} time of race: ${timeOfRace.toFixed(3)} seconds`);
+
+            const car = this.cars.find((c) => c.id === carIds[index]);
+            if (car) {
+              this.carAnimationService.startAnimation(car, timeOfRace, this.renderer);
+            }
+
+            this.makeDrivingRequest(carIds[index], results, timeOfRace);
+          }
+        });
+      })
+      .catch((error) => {
+        console.error('Start all cars error', error);
+      });
   }
 }
