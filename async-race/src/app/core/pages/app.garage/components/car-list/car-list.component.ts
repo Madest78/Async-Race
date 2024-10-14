@@ -2,6 +2,7 @@ import { Component, OnInit, Renderer2 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { lastValueFrom } from 'rxjs';
+import { MatDialog } from '@angular/material/dialog';
 
 import { Car, StartedCar } from '../../models/car.model';
 import { RandomCarService } from '../../services/random-car.service';
@@ -10,6 +11,7 @@ import { CarUpdateDeleteService } from '../../services/car-update-delete.service
 import { CarLoadService } from '../../services/car-load.service';
 import { WinnersApiService } from '../../../app.winners/services/winners-api.service';
 import { CarAnimationService } from '../../services/car-animation.service';
+import { WinnerDialogComponent } from '../winner-dialog/winner-dialog/winner-dialog.component';
 
 @Component({
   selector: 'app-car-list',
@@ -39,7 +41,8 @@ export class CarListComponent implements OnInit {
     private renderer: Renderer2,
     private winnersApiService: WinnersApiService,
     private carAnimationService: CarAnimationService,
-  // eslint-disable-next-line no-empty-function
+    private dialog: MatDialog
+    // eslint-disable-next-line no-empty-function
   ) {}
 
   loadTotalCount(): void {
@@ -47,12 +50,12 @@ export class CarListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.carLoadService.cars$.subscribe((cars) => {
-      this.cars = cars.map((car) => ({ ...car, isStarted: false }));
+    this.carLoadService.cars$.subscribe(cars => {
+      this.cars = cars.map(car => ({ ...car, isStarted: false }));
       this.loadTotalCount();
     });
 
-    this.carLoadService.totalCount$.subscribe((total) => {
+    this.carLoadService.totalCount$.subscribe(total => {
       this.totalCount = total;
     });
   }
@@ -107,123 +110,140 @@ export class CarListComponent implements OnInit {
   }
 
   startStopCar(id: number, status: 'started' | 'stopped'): void {
-    const car = this.cars.find((c) => c.id === id);
+    const car = this.cars.find(c => c.id === id);
 
     if (car) {
       this.startStopCarService.patchStartStopCar(id, status).subscribe(
-        (response) => {
+        response => {
           const { velocity, distance } = response;
 
           if (status === 'started') {
             if (velocity > 0) {
-              const timeOfRace = (distance / 1000) / velocity;
+              const timeOfRace = distance / 1000 / velocity;
               console.log(`Time of race: ${timeOfRace.toFixed(3)} seconds`);
 
-              this.carAnimationService.startAnimation(car, timeOfRace, this.renderer);
+              this.carAnimationService.startAnimation(
+                car,
+                timeOfRace,
+                this.renderer
+              );
             }
             this.startStopCarService.makeDrivingRequest(id).subscribe(
-              (driveResponse) => {
+              driveResponse => {
                 if (driveResponse.success) {
                   console.log('Drive request succeeded', driveResponse);
                 }
               },
-              (error) => {
+              error => {
                 if (error.status === 500) {
                   this.carAnimationService.pauseAnimation(car, this.renderer);
                 }
-              },
+              }
             );
           } else {
             this.carAnimationService.stopAnimation(car, this.renderer);
           }
         },
-        (error) => {
+        error => {
           if (error.status === 500) {
             this.carAnimationService.pauseAnimation(car, this.renderer);
           }
-        },
+        }
       );
     }
   }
 
-  private makeDrivingRequest(id: number, results: StartedCar[], timeOfRace: number): void {
-    this.startStopCarService.makeDrivingRequest(id).subscribe(
-      (response) => {
-        if (response.success) {
-          const car = this.cars.find((c) => c.id === id);
-          if (car) {
-            results.push(car);
-            if (results.length === 1) {
-              console.log(`Winner: id ${car.id}! Time ${timeOfRace.toFixed(3)}`);
-              this.winnersApiService.getWinnerById(car.id).subscribe(
-                (existingWinner) => {
-                  const updatedWins = (existingWinner.wins ?? 0) + 1;
-                  if (existingWinner.time < timeOfRace) {
-                    this.winnersApiService.updateWinner(car.id, {
+  private makeDrivingRequest(
+    id: number,
+    results: StartedCar[],
+    timeOfRace: number
+  ): void {
+    this.startStopCarService.makeDrivingRequest(id).subscribe(response => {
+      if (response.success) {
+        const car = this.cars.find(c => c.id === id);
+        if (car) {
+          results.push(car);
+          if (results.length === 1) {
+            this.dialog.open(WinnerDialogComponent, {
+              data: { id: car.id, time: timeOfRace.toFixed(3) },
+            });
+            console.log(`Winner: id ${car.id}! Time ${timeOfRace.toFixed(3)}`);
+            this.winnersApiService.getWinnerById(car.id).subscribe(
+              existingWinner => {
+                const updatedWins = (existingWinner.wins ?? 0) + 1;
+                if (existingWinner.time < timeOfRace) {
+                  this.winnersApiService
+                    .updateWinner(car.id, {
                       wins: updatedWins,
                       time: existingWinner.time,
-                    }).subscribe(
-                      (updatedWinner) => {
-                        console.log('Wins updated', updatedWinner);
-                      },
-                    );
-                    return;
-                  }
-                  this.winnersApiService.updateWinner(car.id, {
+                    })
+                    .subscribe(updatedWinner => {
+                      console.log('Wins updated', updatedWinner);
+                    });
+                  return;
+                }
+                this.winnersApiService
+                  .updateWinner(car.id, {
                     time: timeOfRace,
                     wins: updatedWins,
-                  }).subscribe(
-                    (updatedWinner) => {
-                      console.log('Winner updated', updatedWinner);
-                    },
-                  );
-                },
-                (error) => {
-                  if (error.status === 404) {
-                    this.winnersApiService.createWinner(car.id, {
+                  })
+                  .subscribe(updatedWinner => {
+                    console.log('Winner updated', updatedWinner);
+                  });
+              },
+              error => {
+                if (error.status === 404) {
+                  this.winnersApiService
+                    .createWinner(car.id, {
                       id: car.id,
                       time: timeOfRace,
                       wins: 1,
-                    }).subscribe(
-                      (newWinner) => {
-                        console.log('Winner created', newWinner);
-                      },
-                    );
-                  } else if (error.status === 500) {
-                    this.carAnimationService.pauseAnimation(car, this.renderer);
-                  }
-                },
-              );
-            }
+                    })
+                    .subscribe(newWinner => {
+                      console.log('Winner created', newWinner);
+                    });
+                } else if (error.status === 500) {
+                  this.carAnimationService.pauseAnimation(car, this.renderer);
+                }
+              }
+            );
           }
         }
-      },
-    );
+      }
+    });
   }
 
   startAllCars(): void {
-    const carIds = this.cars.map((car) => car.id);
+    const carIds = this.cars.map(car => car.id);
     const results: StartedCar[] = [];
-    const startPromises = carIds.map((id) => lastValueFrom(this.startStopCarService.patchStartStopCar(id, 'started')));
+    const startPromises = carIds.map(id =>
+      lastValueFrom(this.startStopCarService.patchStartStopCar(id, 'started'))
+    );
 
     Promise.all(startPromises)
-      .then((responses) => {
+      .then(responses => {
         responses.forEach((response, index) => {
           const { velocity, distance } = response;
           if (velocity > 0) {
-            const timeOfRace = (distance / 1000) / velocity;
-            console.log(`Car ${carIds[index]} time of race: ${timeOfRace.toFixed(3)} seconds`);
+            const timeOfRace = distance / 1000 / velocity;
+            console.log(
+              `Car ${carIds[index]} time of race: ${timeOfRace.toFixed(3)} seconds`
+            );
 
-            const car = this.cars.find((c) => c.id === carIds[index]);
+            const car = this.cars.find(c => c.id === carIds[index]);
             if (car) {
-              this.carAnimationService.startAnimation(car, timeOfRace, this.renderer);
+              this.carAnimationService.startAnimation(
+                car,
+                timeOfRace,
+                this.renderer
+              );
             }
 
             this.makeDrivingRequest(carIds[index], results, timeOfRace);
           }
         });
       })
-      .catch((error) => {
+      .catch(error => {
         console.error('Start all cars error', error);
       });
   }
